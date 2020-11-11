@@ -11,4 +11,9 @@ fun main() {
     val y1 = null
     val x1: String? = y1 as? String
     println("x1 = $x1")   // x = null
+
+    val string = "sssss"
+    string.also(
+        ::println
+    )
 }
