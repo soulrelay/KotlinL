@@ -1,38 +1,35 @@
 package coroutines
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 /**
  * @Description:
  * @Author: SuS
- * @CreateDate: 2020/8/4 7:35 PM
- *
- * https://segmentfault.com/a/1190000020206667?utm_source=tag-newest
+ * @CreateDate: 2021/1/6 2:38 PM
  */
 fun main() {
     runBlocking(Dispatchers.IO) {
 
-        val job1 = launch {
+        val job1 = async {
             for (i in 0..10) {
                 println("job1 normal launch $i ${Thread.currentThread().name} #####")
-                delay(1000)
+                delay(100)
             }
+            10 // 注意这里的返回值
         }
 
-        job1.join()
-
-        val job2 = launch {
+        val job2 = async {
             for (i in 0..10) {
                 println("job2 normal launch $i ${Thread.currentThread().name} -----")
                 delay(100)
             }
+            20 // 注意这里的返回值
         }
 
-//        job1.join()
-        job2.join()
+        println(job1.await() + job2.await())
 
         println("all job finished")
     }
